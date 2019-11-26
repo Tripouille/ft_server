@@ -6,7 +6,7 @@
 #    By: jgambard <marvin@le-101.fr>                +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2019/11/24 15:25:22 by jgambard     #+#   ##    ##    #+#        #
-#    Updated: 2019/11/26 16:11:31 by jgambard    ###    #+. /#+    ###.fr      #
+#    Updated: 2019/11/26 17:32:32 by jgambard    ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -38,7 +38,13 @@ RUN apt-get install -y default-mysql-server
 COPY srcs/mysql/setup.sql .
 
 #Install phpmyadmin
-
+RUN apt-get install unzip
+RUN wget https://files.phpmyadmin.net/phpMyAdmin/5.0.0-rc1/phpMyAdmin-5.0.0-rc1-all-languages.zip
+RUN unzip phpMyAdmin-5.0.0-rc1-all-languages.zip && rm phpMyAdmin-5.0.0-rc1-all-languages.zip
+RUN mv phpMyAdmin-5.0.0-rc1-all-languages /usr/share/phpmyadmin
+RUN ln -s /usr/share/phpmyadmin /var/www/html
+#WORKDIR /usr/share/phpmyadmin
+#RUN cp config.sample.inc.php config.inc.php
 
 #COPY and launch run.sh.
 COPY srcs/run.sh .
