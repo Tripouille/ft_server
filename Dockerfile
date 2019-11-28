@@ -1,4 +1,4 @@
-# **************************************************************************** #
+# *************************************************************************** #
 #                                                           LE - /             #
 #                                                               /              #
 #    Dockerfile                                       .::    .:/ .      .::    #
@@ -6,7 +6,7 @@
 #    By: jgambard <marvin@le-101.fr>                +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2019/11/24 15:25:22 by jgambard     #+#   ##    ##    #+#        #
-#    Updated: 2019/11/27 15:41:50 by jgambard    ###    #+. /#+    ###.fr      #
+#    Updated: 2019/11/28 15:06:19 by jgambard    ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -27,14 +27,9 @@ RUN sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/too
 
 #Install nginx
 RUN apt-get install -y nginx
-COPY srcs/nginx/default_available /etc/nginx/sites-enabled/default
-COPY srcs/ssl/nginx-selfsigned.crt /etc/ssl/private/
-COPY srcs/ssl/nginx-selfsigned.key /etc/ssl/certs/
-COPY srcs/ssl/dhparam.pem /etc/ssl/certs/
-COPY srcs/ssl/self-signed.conf /etc/nginx/snippets/
-COPY srcs/ssl/ssl-params.conf /etc/nginx/snippets/
-COPY srcs/nginx/default_available /etc/nginx/sites-available/default
-EXPOSE 443
+COPY srcs/nginx/default /etc/nginx/sites-available/default
+COPY srcs/nginx/autoindex.sh .
+EXPOSE 80
 
 #Install php requirement and wordpress
 RUN apt-get install -y php-fpm php-mysql
@@ -55,8 +50,11 @@ COPY srcs/mysql/pma.sql .
 COPY srcs/phpmyadmin/config.inc.php /usr/share/phpmyadmin/
 RUN mkdir /usr/share/phpmyadmin/tmp && chmod 777 /usr/share/phpmyadmin/tmp
 
+#Setup ssl
+COPY srcs/ssl/localhost.crt /etc/ssl/certs/
+COPY srcs/ssl/localhost.key /etc/ssl/private/
+EXPOSE 443
+
 #COPY and launch run.sh.
 COPY srcs/run.sh .
 CMD ["sh", "run.sh"];
-
-#RUN apt-get install --o-install-recommends --no-install-suggests -y ca-certificates libssl1.1
