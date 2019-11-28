@@ -6,7 +6,7 @@
 #    By: jgambard <marvin@le-101.fr>                +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2019/11/24 15:25:22 by jgambard     #+#   ##    ##    #+#        #
-#    Updated: 2019/11/28 15:06:19 by jgambard    ###    #+. /#+    ###.fr      #
+#    Updated: 2019/11/28 15:47:46 by jgambard    ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -21,8 +21,8 @@ RUN apt-get -y upgrade
 RUN apt-get install -y wget
 RUN apt-get install -y vim
 RUN apt-get install -y zsh
-RUN apt-get install -y git
 RUN apt-get install -y curl
+RUN apt-get install -y git
 RUN sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
 #Install nginx
